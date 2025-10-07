@@ -1,24 +1,28 @@
 
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
-import { from, Observable } from "rxjs"
+import { from, map, Observable } from "rxjs"
 import { getAllPurchaseData, purchaseArray, purchaseArrays, PurchaseInputs, PurchaseResponse } from "../models/purchase.model"
 import { environment } from "src/environments/environment"
-import { feedsInput, feedsResponse } from "../models/feeds.model"
-import { MortalityInput, MortalityResponse } from "../models/mortality.model"
-import { VaccineInput, VaccineResponse } from "../models/vaccine.model"
-import { SalesInput, SalesResponse } from "../models/sales.model"
+import { feedsInput, feedsResponse, feedsResponses, FeedSummaryResponse } from "../models/feeds.model"
+import { MortalityInput, MortalityResponse, MortalityResponses, mortalitySum } from "../models/mortality.model"
+import { VaccineData, VaccineInput, VaccineResponse, VaccineResponses, VaccineSummaryResponse } from "../models/vaccine.model"
+import { SalesInput, SalesResponse, SalesResponses, saleSummary } from "../models/sales.model"
+import { AllSummaries } from "../models/allrecords.model";
+import { AuthService } from "./auth.service"
+ 
 
 @Injectable()
 
 export class PurchaseService{
     constructor(
-        private http: HttpClient
+        private http: HttpClient,
+        private authService: AuthService
     ){}
 
     // register a new purchase
     registerPurchase(takeRecord: PurchaseInputs):Observable<PurchaseResponse>{
-        return this.http.post<PurchaseResponse>(`${environment.poultryApiUrl}/purchase`, takeRecord)
+        return this.http.post<PurchaseResponse>(`${environment.poultryApiUrl}/purchase`, takeRecord, { headers: this.authService["getAuthHeaders"]()})
     }
 
     // get purchase by batch id
@@ -27,18 +31,54 @@ export class PurchaseService{
     }
 
     registerFeed(feedRecord: feedsInput):Observable<feedsResponse>{
-        return this.http.post<feedsResponse>(`${environment.poultryApiUrl}/feeds`, feedRecord)
+        return this.http.post<feedsResponse>(`${environment.poultryApiUrl}/feeds`, feedRecord, { headers: this.authService["getAuthHeaders"]()})
+    }
+    // feeds registry 
+    getFeedsByBatchId(batchId: string):Observable<feedsResponses>{
+        return this.http.get<feedsResponses>(`${environment.poultryApiUrl}/feeds/${batchId}`)
+    }
+    getFeedSummary(batchId: string):Observable<FeedSummaryResponse>{
+        return this.http.get<FeedSummaryResponse>(`${environment.poultryApiUrl}/feeds-total/${batchId}`)
     }
 
+    //  mortality registry 
     registerMortality(mortalityRecord: MortalityInput):Observable<MortalityResponse>{
-        return this.http.post<MortalityResponse>(`${environment.poultryApiUrl}/mortality`, mortalityRecord)
+        return this.http.post<MortalityResponse>(`${environment.poultryApiUrl}/mortality`, mortalityRecord, { headers: this.authService["getAuthHeaders"]()})
+    }
+    getMortalityByBatchId(batchId: string): Observable<MortalityResponses>{
+        return this.http.get<MortalityResponses>(`${environment.poultryApiUrl}/mortality/${batchId}`)
+    }
+    getMortalitySum(batchId: string):Observable<mortalitySum>{
+        return this.http.get<mortalitySum>(`${environment.poultryApiUrl}/mortality-sum/${batchId}`)
     }
 
+    // vaccine registry 
     registerVaccine(vaccineRecord: VaccineInput):Observable<VaccineResponse>{
-        return this.http.post<VaccineResponse>(`${environment.poultryApiUrl}/vaccine`, vaccineRecord)
+        return this.http.post<VaccineResponse>(`${environment.poultryApiUrl}/vaccine`, vaccineRecord, { headers: this.authService["getAuthHeaders"]()})
+    }
+    getVaccineByBatchId(batchId: string):Observable<VaccineResponses>{
+        return this.http.get<VaccineResponses>(`${environment.poultryApiUrl}/vaccine/${batchId}`)
+    }
+    getVaccineSummaryByBatchId(batchId: string):Observable<VaccineSummaryResponse>{
+        return this.http.get<VaccineSummaryResponse>(`${environment.poultryApiUrl}/total-vaccine/${batchId}`)
     }
 
+    // sales registry 
     registerSales(saleRecord: SalesInput):Observable<SalesResponse>{
-        return this.http.post<SalesResponse>(`${environment.poultryApiUrl}/sales`, saleRecord)
+        return this.http.post<SalesResponse>(`${environment.poultryApiUrl}/sales`, saleRecord, { headers: this.authService["getAuthHeaders"]()})
+    }
+    getSalesByBatchId(batchId: string):Observable<SalesResponses>{
+        return this.http.get<SalesResponses>(`${environment.poultryApiUrl}/sales/${batchId}`)
+    }
+    getSaleSummary(batchId: string):Observable<saleSummary>{
+        return this.http.get<saleSummary>(`${environment.poultryApiUrl}/sale-summary/${batchId}`)
+    }
+
+    getAllSummaries(batchId: string): Observable<AllSummaries> {
+        return this.http.get<{ data: AllSummaries }>(
+            `${environment.poultryApiUrl}/all-records/${batchId}`
+        ).pipe(
+            map((res) => res.data)
+        );
     }
 }

@@ -7,6 +7,20 @@ export class BatchModel {
     ){}
 }
 
+export class BatchResponse {
+    constructor(
+        public message: string,
+        public data: BatchData
+    ){}
+}
+
+export class BatchArray{
+    constructor(
+        public message: string,
+        public data: BatchData[]
+    ){}
+}
+
 export class BatchData {
     constructor(
         public userId: string,
@@ -15,13 +29,9 @@ export class BatchData {
         public status: string,
         public _id: string,
         public startDate: string,
-        public createAt: string
+        public createAt: string,
+        public endDate?: string // ✅ optional field for completed batches
     ){}
 }
 
-export class BatchResponse {
-    constructor(
-        public message: string,
-        public data: BatchResponse
-    ){}
-}
+

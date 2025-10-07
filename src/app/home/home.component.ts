@@ -9,6 +9,7 @@ import { VaccineInput, VaccineResponse } from "../models/vaccine.model";
 import { SalesInput, SalesResponse } from "../models/sales.model";
 import { BatchSelectionService } from "../services/batch-selection.service";
 
+declare var bootstrap: any;
 @Component({
   selector: 'app-admin-home',
   templateUrl: './home.component.html',
@@ -18,7 +19,7 @@ export class HomeComponent implements OnInit {
   title = 'Admin & User database';
   subtitle = 'view and make changes to your poultry farm records.';
   formTitle = "Add purchase";
-  side_panel_batch = "Name"
+  side_panel_batch = "clickMe to create/select a batch!"
 
   constructor(
     private formSelectionService: FormSelectionService,
@@ -27,8 +28,8 @@ export class HomeComponent implements OnInit {
     private batchSelectionService: BatchSelectionService
   ) {}
 
-  purchaseUser: PurchaseInputs = new PurchaseInputs(0, 0, "");
-  feedsUser: feedsInput = new feedsInput(0, 0, '', '');
+  purchaseUser: PurchaseInputs = new PurchaseInputs(0, 0, "", "");
+  feedsUser: feedsInput = new feedsInput("", 0, 0, '', '');
   mortalityUser: MortalityInput = new MortalityInput(0, '', '');
   vaccineUser: VaccineInput = new VaccineInput('',0,0,'','')
   salesUser: SalesInput = new SalesInput(0,0,'','')
@@ -77,21 +78,28 @@ export class HomeComponent implements OnInit {
         this.salesUser.batchId = parsedBatch._id
 
         // check if purchase is available for this batch
+        this.isLoading = true
         this.purchaseService.getPurchasesByBatchId(parsedBatch._id).subscribe({
           next: (res: purchaseArrays) => {
+            this.isLoading = false
             if (res && res.data.length > 0) {
               this.currentPurchase = res.data; // store the purchase records
               this.feedsUser.purchaseId = this.currentPurchase[this.currentPurchase.length - 1]._id;
               this.mortalityUser.purchaseId = this.currentPurchase[this.currentPurchase.length - 1]._id;
               this.vaccineUser.purchaseId = this.currentPurchase[this.currentPurchase.length - 1]._id
+              this.salesUser.purchaseId = this.currentPurchase[this.currentPurchase.length - 1]._id
               localStorage.setItem("purchaseId", this.feedsUser.purchaseId);
               localStorage.setItem("purchaseId", this.mortalityUser.purchaseId);
               localStorage.setItem("purchaseId", this.vaccineUser.purchaseId)
               localStorage.setItem("purchaseId", this.salesUser.purchaseId)
+            }else{
+              this.currentPurchase = null; // no purchase, show form
             }
           },
           error: (err) => {
             console.error("Error fetching purchase by batchId", err.message);
+            this.isLoading = false
+            this.currentPurchase = null; // no purchase, show form
           }
         });
       } catch (err) {
@@ -198,8 +206,8 @@ export class HomeComponent implements OnInit {
           this.errorFeedsMessage = '';
           console.info("Feeds record taken: ", res);
           form.resetForm({
-            batchId: this.salesUser.batchId,
-            purchaseId: this.salesUser.purchaseId
+            batchId: this.feedsUser.batchId,
+            purchaseId: this.feedsUser.purchaseId
           });
           this.clearMessageAfterDelay('feedsSuccess');
         },
@@ -212,10 +220,10 @@ export class HomeComponent implements OnInit {
         }
       });
 
-      form.resetForm({
-        batchId: this.purchaseUser.batchId,
-        purchaseId: this.feedsUser.purchaseId
-      });
+      // form.resetForm({
+      //   batchId: this.feedsUser.batchId,
+      //   purchaseId: this.feedsUser.purchaseId
+      // });
     }
 
     // mortality
@@ -238,8 +246,8 @@ export class HomeComponent implements OnInit {
           this.successMortalityMessage = res.message || "Mortality record saved successfully ✅";
           this.errorMortalityMessage = '';
           form.resetForm({
-            batchId: this.salesUser.batchId,
-            purchaseId: this.salesUser.purchaseId
+            batchId: this.mortalityUser.batchId,
+            purchaseId: this.mortalityUser.purchaseId
           });
           this.clearMessageAfterDelay('mortalitySuccess');
         },
@@ -262,14 +270,15 @@ export class HomeComponent implements OnInit {
         return
       }
       console.log("Form is valid (Vaccine): ", this.vaccineUser)
+      this.vaccineUser.purchaseId = this.vaccineUser.purchaseId || localStorage.getItem("purchaseId") || "";
       this.purchaseService.registerVaccine(this.vaccineUser).subscribe({
         next: (res: VaccineResponse) => {
           this.isLoading = false
           this.successVaccineMessage = res.message || "Vacine record saved successfully ✅"
           this.errorVaccineMessage = ""
           form.resetForm({
-            batchId: this.salesUser.batchId,
-            purchaseId: this.salesUser.purchaseId
+            batchId: this.vaccineUser.batchId,
+            purchaseId: this.vaccineUser.purchaseId
           });
           this.clearMessageAfterDelay("vaccineSuccess")
         }, error: (err) => {
@@ -290,6 +299,7 @@ export class HomeComponent implements OnInit {
         return
       }
       console.log("sales is valid")
+      this.salesUser.purchaseId = this.salesUser.purchaseId || localStorage.getItem("purchaseId") || "";
       this.purchaseService.registerSales(this.salesUser).subscribe({
         next: (res: SalesResponse) => {
           this.isLoading = false
@@ -312,5 +322,10 @@ export class HomeComponent implements OnInit {
 
   selectedForm(name: string) {
     this.formSelectionService.setSelectedForm(name);
+    const bsOffcanvas = document.getElementById("offcanvasWithBothOptions")
+    if(bsOffcanvas){
+      const closeCanvas = bootstrap.Offcanvas.getInstance(bsOffcanvas)
+      closeCanvas?.hide()
+    }
   }
 }

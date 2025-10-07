@@ -1,0 +1,571 @@
+<!-- <h2 class="py-5">Vaccine route works!</h2> -->
+<section class="editdatabase pt-5 background-dark no-overflow">
+  <div class="container-fluid p-0">
+    <div class="row">
+      <!-- ------------ side-panel ------------- -->
+       
+      <div class="col-md-2 border-right position-fixed bg-primary-reduced vh-100 display-0" style="z-index: 1; margin-left: 10px;">
+        <h5 class="pt-5 text-center"><a>View {{batchName}} Records</a></h5>
+        <!-- <p class="text-center link-to-batch"><strong>Batch | </strong></p> -->
+
+        <div class="buttons mt-3 mx-1 mb-3" (click)="setSelectedSection('vaccines')">
+          <span class="text-center d-flex span-button text-size" type="button">
+            <img class="flip-image flex-shrink-0 flips me-1" src="https://i.ibb.co/3mpT5psw/vaccines.png" width="25" height="25" alt="vaccines"> vaccines
+          </span>
+        </div>
+
+        <div class="buttons mx-1" (click)="goback()">
+          <span class="text-center d-flex align-items-center span-button text-size" type="button">
+            <img class="flip-image flex-shrink-1" src="https://i.ibb.co/N4qbNH8/chick-img.png" width="25" height="25" alt="chicks"> Purchases
+          </span>
+        </div>
+
+        <div class="buttons mt-3 mx-1" (click)="setSelectedSection('feeds')">
+          <span class="text-center d-flex align-items-center span-button text-size" type="button">
+            <img class="flip-image flex-shrink-1 flips me-1" src="https://i.ibb.co/KcrBNThw/chick-fed-removebg-preview.png" width="25" height="25" alt="feeds"> feeds
+          </span>
+        </div>
+
+        <div class="buttons mt-3 mx-1" (click)="setSelectedSection('mortalities')">
+          <span class="text-center d-flex align-items-center span-button text-size" type="button">
+            <img class="flip-image flex-shrink-1 flips me-1" src="https://i.ibb.co/B2qXVTN2/deadchick1.png" width="25" height="25" alt="mortality"> mortality
+          </span>
+        </div>
+
+        <div class="buttons mt-3 mx-1" (click)="setSelectedSection('sales')">
+          <span class="text-center d-flex span-button text-size" type="button">
+            <img class="flip-image flex-shrink-0 flips me-1" src="https://i.ibb.co/HfXYvsNt/money-removebg-preview.png" width="25" height="25" alt="sales"> sales
+          </span>
+        </div>
+
+        <div class="buttons mt-3 mx-1" (click)="setSelectedSection('summary')">
+          <span class="text-center d-flex span-button text-size" type="button">
+            <img class="flip-image flex-shrink-0 flips me-1" src="https://i.ibb.co/SX5yZNN5/sum1.png" width="25" height="25" alt="sales"> summary
+          </span>
+        </div>
+
+        <div class="buttons mt-3 mx-1" (click)="setSelectedSection('all-summaries')">
+          <span class="text-center d-flex span-button text-size" type="button">
+             all records
+          </span>
+        </div>
+      </div>
+       <!-- --------------- end of side panel -----------  -->
+
+       <!-- -------------- body content -----------  -->
+      <div class="col-md-10 offset-md-2 padding-small-screen">
+        <div class="mx-auto mb-5" style="max-width: 800px;">
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="small-screen-display" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+              <img src="../../../../assets/images/sidebar-icon.svg" alt="sidebar icon" class="sidebar-fixed-icon">
+            </span>
+            <h3 class="flex-grow-1 text-center text-dark mb-0 padding-small-screens data-header">All {{selectedSection}} data since Batch started</h3>
+          </div>
+        
+          <!-- ---------- small screen side-panel --------  -->
+          <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+            <div class="offcanvas-header align-items-right justify-content-end">
+              <h5 class="offcanvas-title ms-auto" id="offcanvasWithBothOptionsLabel">Select the options below to view their data</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <p class="text-center link-to-batch"><strong>Batch | </strong>{{batchName}}</p>
+
+              <div class="buttons mt-3 mb-3" (click)="setSelectedSection('vaccines')">
+                <span class="text-center d-flex span-button text-size" type="button">
+                  <img class="flip-image flex-shrink-0 flips me-1" src="https://i.ibb.co/3mpT5psw/vaccines.png" width="25" height="25" alt="vaccines"> vaccines
+                </span>
+              </div>
+
+              <div class="buttons" (click)="goback()">
+                <span class="text-center d-flex align-items-center span-button text-size" type="button">
+                  <img class="flip-image flex-shrink-1" src="https://i.ibb.co/N4qbNH8/chick-img.png" width="25" height="25" alt="chicks"> chickens bought
+                </span>
+              </div>
+              <div class="buttons mt-3" (click)="setSelectedSection('feeds')">
+                <span class="text-center d-flex align-items-center span-button text-size" type="button">
+                  <img class="flip-image flex-shrink-1 flips me-1" src="https://i.ibb.co/KcrBNThw/chick-fed-removebg-preview.png" width="25" height="25" alt="feeds"> feeds
+                </span>
+              </div>
+
+              <div class="buttons mt-3" (click)="setSelectedSection('mortalities')">
+                <span class="text-center d-flex align-items-center span-button text-size" type="button">
+                  <img class="flip-image flex-shrink-1 flips me-1" src="https://i.ibb.co/B2qXVTN2/deadchick1.png" width="25" height="25" alt="mortality"> mortality
+                </span>
+              </div>
+
+              <div class="buttons mt-3" (click)="setSelectedSection('sales')">
+                <span class="text-center d-flex span-button text-size" type="button">
+                  <img class="flip-image flex-shrink-0 flips me-1" src="https://i.ibb.co/HfXYvsNt/money-removebg-preview.png" width="25" height="25" alt="sales"> sales
+                </span>
+              </div>
+
+              <div class="buttons mt-3" (click)="setSelectedSection('summary')">
+                <span class="text-center d-flex span-button text-size" type="button">
+                  <img class="flip-image flex-shrink-0 flips me-1" src="https://i.ibb.co/HfXYvsNt/money-removebg-preview.png" width="25" height="25" alt="sales"> summary
+                </span>
+              </div>
+              
+              <div class="buttons mt-3" (click)="setSelectedSection('all-summaries')">
+                <span class="text-center d-flex span-button text-size" type="button">
+                   all records
+                </span>
+              </div>
+            </div>
+          </div>
+          <!-- ----------- end of small screen side-panel ------  -->
+          <div class="inputs no-margin d-flex align-items-center justify-content-center">
+            <div class="container-fluid py-4">
+              <!-- --- loader ---  -->
+              <div *ngIf="loading" class="text-center">
+                <div class="spinner-border text-primary" role="status"></div>
+                <p>Loading Data...</p>
+              </div>
+              <!-- Error -->
+              <div *ngIf="errorMessage && !loading" class="alert alert-danger">
+                {{ errorMessage }}
+              </div>
+              <!-- Table view for large screens -->
+              <ng-container *ngIf="selectedSection === 'vaccines'">
+                <div class="card w-100" *ngIf="!loading && vaccines.length > 0">
+                  <div class="table-responsive d-none d-md-block">
+                    <table class="table table-striped table-hover table-bordered shadow">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Vaccine Name</th>
+                          <th>Vaccine Quantity</th>
+                          <th>Price per Vaccine (NGN)</th>
+                          <th>Total Amount</th>
+                          <th>Bought Date</th>
+                          <th>Batch Id</th>
+                          <th>Batch Name</th>
+                          <th>Batch Start Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let vaccine of vaccines; let i = index">
+                          <th scope="row">{{ i + 1 }}</th>
+                          <td>{{ vaccine.vaccineName }}</td>
+                          <td>{{ vaccine.quantity }}</td>
+                          <td>₦{{ vaccine.vaccinePrice | number }}</td>
+                          <td>₦{{ vaccine.totalAmount | number }}</td>
+                          <td>{{ vaccine.date }}</td>
+                          <td>{{vaccine.batchId._id | slice:0:6}}</td>
+                          <td>{{ vaccine.batchId.name }}</td>
+                          <td>{{ vaccine.batchId.startDate | date:'mediumDate' }}</td>
+
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Card layout for small screens -->
+                  <div class="d-block d-md-none">
+                    <div *ngFor="let vaccine of vaccines; let i = index" class="card mb-3 shadow-sm">
+                      <div class="card-body shadow">
+                        <h6 class="card-title text-danger">Vaccine #{{ i + 1 }}</h6>
+                        <p><strong class="text-primary">Vaccine Name:</strong> {{ vaccine.vaccineName }}</p>
+                        <p><strong class="text-primary">Vaccine Quantity:</strong> {{ vaccine.quantity }}</p>
+                        <p><strong class="text-primary">Vaccine Price:</strong> ₦{{ vaccine.vaccinePrice | number }}</p>
+                        <p><strong class="text-primary">Vaccine Total:</strong> ₦{{ vaccine.totalAmount | number }}</p>
+                        <p><strong class="text-primary">Bought Date:</strong> {{ vaccine.date }}</p>
+                        <p><strong class="text-primary">Batch Id:</strong> {{ vaccine.batchId._id | slice:0:6 }}</p>
+                        <p><strong class="text-primary">Batch Name:</strong> {{ vaccine.batchId.name }}</p>
+                        <p><strong class="text-primary">Batch Start:</strong> {{ vaccine.batchId.startDate | date:'mediumDate' }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="selectedSection === 'feeds'">
+                <div class="card w-100" *ngIf="!loading && feeds.length > 0">
+                  <div class="table-responsive d-none d-md-block">
+                    <table class="table table-striped table-hover table-bordered shadow">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Feeds Name</th>
+                          <th>Feeds Quantity</th>
+                          <th>Price per Feed (NGN)</th>
+                          <th>Total Amount (NGN)</th>
+                          <th>Bought Date</th>
+                          <th>ID</th>
+                          <th>Chicks Name</th>
+                          <!-- <th>Purchase Date</th> -->
+                          <th>Batch Start Date</th>
+                          <th>Purchase ID</th>
+                          <th>Batch Id</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let feed of feeds; let i = index">
+                          <th scope="row">{{ i + 1 }}</th>
+                          <td>{{ feed.name }}</td>
+                          <td>{{ feed.quantity }}</td>
+                          <td>₦{{ feed.pricePerFeed | number }}</td>
+                          <td>₦{{ feed.totalPrice | number }}</td>
+                          <td>{{ feed.date }}</td>
+                          <td>{{ feed._id | slice:0:6 }}</td>
+                          <td>{{ feed.purchaseId.name }}</td>
+                          <!-- <td>{{ feed.purchaseId.daysSincePurchase }}</td> -->
+                          <td>{{ feed.batchId.startDate | date:'mediumDate' }}</td>
+                          <td>{{ feed.purchaseId._id | slice:0:6 }}</td>
+                          <td>{{feed.batchId._id | slice:0:6}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Card layout for small screens -->
+                  <div class="d-block d-md-none">
+                    <div *ngFor="let feed of feeds; let i = index" class="card mb-3 shadow-sm">
+                      <div class="card-body shadow">
+                        <h6 class="card-title text-danger">Feeds #{{ i + 1 }}</h6>
+                        <p><strong class="text-primary">Feeds Name:</strong> {{ feed.name }}</p>
+                        <p><strong class="text-primary">Feeds Quantity:</strong> {{ feed.quantity }}</p>
+                        <p><strong class="text-primary">Price per Feed (NGN):</strong> ₦{{ feed.pricePerFeed | number }}</p>
+                        <p><strong class="text-primary">Total Amount (NGN):</strong> ₦{{ feed.totalPrice | number }}</p>
+                        <p><strong class="text-primary">Bought Date:</strong> {{ feed.date }}</p>
+                        <p><strong class="text-primary">ID:</strong> {{ feed._id | slice:0:6 }}</p>
+                        <p><strong class="text-primary">Batch Name:</strong> {{ feed.batchId.name }}</p>
+                        <p><strong class="text-primary">Purchase Name:</strong> {{ feed.purchaseId.name }}</p>
+                        <!-- <p><strong class="text-primary">Purchase Date:</strong> {{ feed.purchaseId.daysSincePurchase }}</p> -->
+                        <p><strong class="text-primary">Batch Start Date:</strong> {{ feed.batchId.startDate | date:'mediumDate' }}</p>
+                        <p><strong class="text-primary">Purchase ID:</strong> {{ feed.purchaseId._id | slice:0:6 }}</p>
+                        <p><strong class="text-primary">Batch Id:</strong> {{ feed.batchId._id | slice:0:6 }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="selectedSection === 'mortalities'">
+                <div class="card w-100" *ngIf="!loading && mortalities.length > 0">
+                  <div class="table-responsive d-none d-md-block">
+                    <table class="table table-striped table-hover table-bordered shadow">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Mortality Rate</th>
+                          <th>Mortality Age</th>
+                          <th>Date</th>
+                          <th>ID</th>
+                          <th>Purchase Name</th>
+                          <th>Days Since Purchase</th>
+                          <th>Purchase Date</th>
+                          <th>Purchase Date (Formatted)</th>
+                          <th>Batch Name</th>
+                          <th>Batch Start Date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let mortality of mortalities; let i = index">
+                          <th scope="row">{{ i + 1 }}</th>
+                          <td>{{ mortality.mortalityRate }}</td>
+                          <td>{{ mortality.mortalityAge }} days old</td>
+                          <td>{{ mortality.date }}</td>
+                          <td>{{ mortality._id | slice:0:6 }}</td>
+                          <td>{{ mortality.purchaseId.name }}</td>
+                          <td>{{ mortality.purchaseId.daysSincePurchase }}</td>
+                          <td>{{ mortality.purchaseId.dateOfPurchase | date:'medium' }}</td>
+                          <td>{{ mortality.purchaseId.dateOfPurchaseFormatted }}</td>
+                          <td>{{ mortality.batchId.name }}</td>
+                          <td>{{ mortality.batchId.startDate | date:'mediumDate' }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Card layout for small screens -->
+                  <div class="d-block d-md-none">
+                    <div *ngFor="let mortality of mortalities; let i = index" class="card mb-3 shadow-sm">
+                      <div class="card-body shadow">
+                        <h6 class="card-title text-danger">Mortality #{{ i + 1 }}</h6>
+                        <p><strong class="text-primary">Mortality Rate:</strong> {{ mortality.mortalityRate }}</p>
+                        <p><strong class="text-primary">Mortality Age:</strong> {{ mortality.mortalityAge }} days old</p>
+                        <p><strong class="text-primary">Date:</strong> {{ mortality.date }}</p>
+                        <p><strong class="text-primary">ID:</strong> {{ mortality._id | slice:0:6 }}</p>
+                        <p><strong class="text-primary">Purchase Name:</strong> {{ mortality.purchaseId.name }}</p>
+                        <p><strong class="text-primary">Days Since Purchase:</strong> {{ mortality.purchaseId.daysSincePurchase }}</p>
+                        <p><strong class="text-primary">Purchase Date:</strong> {{ mortality.purchaseId.dateOfPurchase | date:'mediumDate' }}</p>
+                        <p><strong class="text-primary">Purchase Date (Formatted):</strong> {{ mortality.purchaseId.dateOfPurchaseFormatted }}</p>
+                        <p><strong class="text-primary">Batch Name:</strong> {{ mortality.batchId.name }}</p>
+                        <p><strong class="text-primary">Batch Start:</strong> {{ mortality.batchId.startDate | date:'mediumDate' }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+
+
+              <ng-container *ngIf="selectedSection === 'sales'">
+                <div class="card w-100" *ngIf="!loading && sales.length > 0">
+                  <div class="table-responsive d-none d-md-block">
+                    <table class="table table-striped table-hover table-bordered shadow">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Age</th>
+                          <th>Quantity sold</th>
+                          <th>Price per Sale</th>
+                          <th>Total Amount (NGN)</th>
+                          <th>Sold Date</th>
+                          <th>ID</th>
+                          <th>Purchase Name</th>
+                          <th>Batch Name</th>
+                          <th>Batch Start date</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let sale of sales; let i = index">
+                          <th scope="row">{{ i + 1 }}</th>
+                          <td>{{ sale.age }}</td>
+                          <td>{{ sale.numberSold }}</td>
+                          <td>₦{{ sale.pricePerSale| number }}</td>
+                          <td>₦{{ sale.totalPrice| number }}</td>
+                          <td>{{ sale.date }}</td>
+                          <td>{{ sale._id| slice:0:6 }}</td>
+                          <td>{{ sale.purchaseId.name }}</td>
+                          <td>{{ sale.batchId.name }}</td>
+                          <td>{{ sale.batchId.startDate | date:'mediumDate' }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Card layout for small screens -->
+                  <div class="d-block d-md-none">
+                    <div *ngFor="let sale of sales; let i = index" class="card mb-3 shadow-sm">
+                      <div class="card-body shadow">
+                        <h6 class="card-title text-danger">Sales #{{ i + 1 }}</h6>
+                        <p><strong class="text-primary">Age:</strong> {{ sale.age }}</p>
+                        <p><strong class="text-primary">Quantity sold:</strong> {{ sale.numberSold }}</p>
+                        <p><strong class="text-primary">Price per Sale:</strong> ₦{{ sale.pricePerSale| number }}</p>
+                        <p><strong class="text-primary">Total Amount (NGN):</strong> ₦{{ sale.totalPrice| number }}</p>
+                        <p><strong class="text-primary">Sold Date:</strong> {{ sale.date }}</p>
+                        <p><strong class="text-primary">ID:</strong> {{ sale._id| slice:0:6 }}</p>
+                        <p><strong class="text-primary">Batch Name:</strong> {{ sale.batchId.name }}</p>
+
+                        <p><strong class="text-primary">Batch Start Date:</strong> {{ sale.batchId.startDate | date:'mediumDate' }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="selectedSection === 'summary'">
+                <!-- ✅ Sale Summary Section -->
+                <div class="card mb-3 shadow" *ngIf="saleSumData">
+                  <div class="card-body">
+                    <h5 class="card-title smallH4 text-white">💰 Sales Summary</h5>
+                    <p class="smallText"><strong>Total Quantity Sold:</strong> 
+                      <small class="text-primary saleSumText">
+                        {{ saleSumData.totalNumSold }}
+                      </small>
+                    </p>
+                    <p class="smallText"><strong>Total Sale Amount (NGN):</strong> 
+                      <small class="text-primary saleSumText">
+                        ₦{{ saleSumData.totalSaleAmount | number }}
+                      </small>
+                    </p>
+                    <p class="smallText"><strong>Last Updated:</strong> 
+                      <small class="text-primary saleSumText">
+                        {{ saleSumData.lastUpdated | date:'mediumDate' }}
+                      </small>
+                    </p>
+                  </div>
+                </div>
+                <div class="card mb-3 shadow" *ngIf="mortSumData">
+                  <div class="card-body">
+                    <h5 class="card-title smallH4 text-white">⚰️ Mortality Summary</h5>
+                    <p class="smallText"><strong>Total Mortality for this Batch:</strong> 
+                      <small class="text-primary saleSumText">
+                        {{ mortSumData.totalMortalities }}
+                      </small>
+                    </p>
+                    <p class="smallText"><strong>Last Updated:</strong> 
+                      <small class="text-primary saleSumText">
+                        {{ mortSumData.lastUpdated| date:'mediumDate' }}
+                      </small>
+                    </p>
+                    <!-- <p class="smallText"><strong>Batch ID:</strong> 
+                      <small class="text-primary saleSumText">
+                        {{ mortSumData.batchId }}
+                      </small>
+                    </p> -->
+                  </div>
+                </div>
+                <div class="card mb-3 shadow" *ngIf="vaccineSummary">
+                  <div class="card-body">
+                    <h5 class="card-title smallH4 text-white">💉 Vaccine Total Summary</h5>
+                    <p class="smallText"><strong>Total Amount:</strong> 
+                      <small class="text-primary saleSumText">
+                        ₦{{ vaccineSummary.totalVaccineAmount }}
+                      </small>
+                    </p>
+                    <p class="smallText"><strong>Last Updated:</strong> 
+                      <small class="text-primary saleSumText">
+                        {{ vaccineSummary.dateUpdated | date:'mediumDate' }}
+                      </small>
+                    </p>
+                    <p class="smallText"><strong>Batch:</strong> 
+                      <small class="text-primary saleSumText">
+                        {{ vaccineSummary.batchId.name }}
+                      </small>
+                    </p>
+                  </div>
+                </div>
+                <!-- show grand total -->
+                <div class="card mb-3 shadow" *ngIf="feedSummary">
+                  <div class="card-body">
+                    <h5 class="card-title smallH4 text-white">🥣 Feed Grand Total</h5>
+                    <p class="smallText"><strong>Total Quantity:</strong> 
+                      <small class="text-primary saleSumText">
+                        {{ feedSummary.grandTotal.totalQuantity }}
+                      </small>
+                    </p>
+                    <p class="smallText"><strong>Total Price:</strong> 
+                      <small class="text-primary saleSumText">
+                        ₦{{ feedSummary.grandTotal.totalPrices }}
+                      </small>
+                    </p>
+                  </div>
+                  <!-- per purchase breakdown -->
+                  <div class="mt-3">
+                    <h6 class="card-title smallH4 text-white">Per Purchase</h6>
+                    <div *ngFor="let item of feedSummary.perPurchase" class="card mb-2">
+                      <div class="card-body">
+                        <p class="smallText"><strong>Purchase:</strong> 
+                          <small class="text-primary saleSumText">
+                            {{ item.purchaseDetails.name }}
+                          </small>
+                        </p>
+                        <p class="smallText"><strong>Quantity:</strong> 
+                          <small class="text-primary saleSumText">
+                            {{ item.totalQuantity }}
+                          </small>
+                        </p>
+                        <p class="smallText"><strong>Price:</strong> 
+                          <small class="text-primary saleSumText">
+                            ₦{{ item.totalPrice }}
+                          </small>
+                        </p>
+                        <p class="smallText"><strong>Date:</strong> 
+                          <small class="text-primary saleSumText">
+                            {{ item.purchaseDetails.dateOfPurchase | date }}
+                          </small>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="selectedSection === 'all-summaries'">
+                <!-- Loader -->
+              <div *ngIf="loading" class="text-center p-3">
+                <p>⏳ Loading summaries...</p>
+              </div>
+
+              <!-- Error -->
+              <div *ngIf="errorMessage" class="alert alert-danger">
+                {{ errorMessage }}
+              </div>
+
+              <!-- Summaries Section -->
+              <div *ngIf="allSummaries">
+
+                <!-- 🐥 Purchase Summary -->
+                <div class="card my-3" *ngIf="allSummaries.purchaseSummary">
+                  <div class="card-body bg-light">
+                    <h5 class="card-title">🐥 Purchase Summary</h5>
+                    <p><strong>Batch:</strong> {{ allSummaries.purchaseSummary.batchId.name }}</p>
+                    <p><strong>Total Chicks:</strong> {{ allSummaries.purchaseSummary.quantity }}</p>
+                    <p><strong>Total Cost:</strong> ₦{{ allSummaries.purchaseSummary.price }}</p>
+                    <p><strong>Cost per chick:</strong> ₦{{ allSummaries.purchaseSummary.pricePerChick }}</p>
+                    <p><strong>Date:</strong> {{ allSummaries.purchaseSummary.dateOfPurchase | date:'short' }}</p>
+                  </div>
+                </div>
+
+                <!-- 🌾 Feed Summary -->
+                <div class="card my-3" *ngIf="allSummaries.feedSummary">
+                  <div class="card-body bg-light">
+                    <h5 class="card-title">🌾 Feed Summary</h5>
+                    <p><strong>Total Quantity:</strong> {{ allSummaries.feedSummary.totalQuantity }} bags</p>
+                    <p><strong>Total Cost:</strong> ₦{{ allSummaries.feedSummary.totalPrices }}</p>
+                    <p><strong>Last Updated:</strong> {{ allSummaries.feedSummary.updatedAt | date:'short' }}</p>
+                  </div>
+                </div>
+
+                <!-- 💉 Vaccine Summary -->
+                <div class="card my-3" *ngIf="allSummaries.totalVaccineSummary">
+                  <div class="card-body bg-light">
+                    <h5 class="card-title">💉 Vaccine Summary</h5>
+                    <p><strong>Total Vaccine Cost:</strong> ₦{{ allSummaries.totalVaccineSummary.totalVaccineAmount }}</p>
+                    <p><strong>Last Updated:</strong> {{ allSummaries.totalVaccineSummary.dateUpdated | date:'short' }}</p>
+                  </div>
+                </div>
+
+                <!-- ⚰ Mortality Summary -->
+                <div class="card my-3" *ngIf="allSummaries.mortalitySummary">
+                  <div class="card-body bg-light">
+                    <h5 class="card-title">⚰ Mortality Summary</h5>
+                    <p><strong>Total Deaths:</strong> {{ allSummaries.mortalitySummary.totalDeaths }}</p>
+                    <p><strong>Last Updated:</strong> {{ allSummaries.mortalitySummary.dateUpdated | date:'short' }}</p>
+                  </div>
+                </div>
+
+                <!-- 💰 Sales Summary -->
+                <div class="card my-3" *ngIf="allSummaries.salesSummary">
+                  <div class="card-body bg-light">
+                    <h5 class="card-title">💰 Sales Summary</h5>
+                    <p><strong>Total Sold:</strong> {{ allSummaries.salesSummary.totalNumSold }} chickens</p>
+                    <p><strong>Total Revenue:</strong> ₦{{ allSummaries.salesSummary.totalSaleAmount }}</p>
+                    <p><strong>Last Updated:</strong> {{ allSummaries.salesSummary.lastUpdated | date:'short' }}</p>
+                  </div>
+                </div>
+
+                <!-- 📊 Computed Summary -->
+                <div class="card my-3" *ngIf="allSummaries.computedSummary">
+                  <div class="card-body bg-light">
+                    <h5 class="card-title">📊 Computed Summary</h5>
+                    <p><strong>Total Chicks:</strong> {{ allSummaries.computedSummary.purchasedChicks }}</p>
+                    <p><strong>Total Deaths:</strong> {{ allSummaries.computedSummary.totalMortality }}</p>
+                    <p><strong>Total Sold:</strong> {{ allSummaries.computedSummary.totalNumSold }}</p>
+                    <p><strong>Remaining Chicks:</strong> {{ allSummaries.computedSummary.remainingChicks }}</p>
+                    <p><strong>Total Feeds Bags:</strong> {{ allSummaries.computedSummary.totalFeedsBag }} bags</p>
+                    <p><strong>Total Feeds Amount:</strong> ₦{{ allSummaries.computedSummary.totalFeeds }}</p>
+                    <p><strong>Total Expenses:</strong> ₦{{ allSummaries.computedSummary.totalExpenses }}</p>
+                    <p><strong>Revenue:</strong> ₦{{ allSummaries.computedSummary.revenue }}</p>
+                    <p><strong>Capital:</strong> ₦{{ allSummaries.computedSummary.capital }}</p>
+                    <p><strong>Net Profit:</strong> ₦{{ allSummaries.computedSummary.netProfit }}</p>
+                    <p><strong>Start Date:</strong> {{ allSummaries.computedSummary.startDate | date:'mediumDate' }}</p>
+                    <p *ngIf="allSummaries.computedSummary.batchId?.endDate">
+                      <strong>End Date:</strong> {{ allSummaries.computedSummary.batchId.endDate | date:'mediumDate' }}
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+
+              </ng-container>
+
+
+              <!-- No records -->
+              <div *ngIf="!loading">
+                <div *ngIf="selectedSection === 'vaccines' && vaccines.length === 0" class="alert alert-warning text-center">
+                  No vaccine records found for this batch
+                </div>
+
+                <div *ngIf="selectedSection === 'feeds' && feeds.length === 0" class="alert alert-warning text-center">
+                  No feed records found for this batch
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pt-5 text-center footer-class">
+          <app-footer></app-footer>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

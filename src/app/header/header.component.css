@@ -10,6 +10,7 @@
 
 .nav-colors .nav-link:hover {
   color: var(--black) !important;
+  cursor: pointer;
 }
 
 .navbar-toggler {
