@@ -1,26 +1,26 @@
-<div class="home">
+<div class="home fade-in-container">
   <div class="overlay"></div>
   <div class="container mb-bottom pb-5 mt-5 pt-4">
-    <h1 class="text-center pt-5">REGISTER</h1>
-    <h1 class="text-center">Welcome to Poultry Management</h1>
-    <p class="text-center pb-5">Manage your poultry farm efficiently with our comprehensive tools.</p>
+    <h1 class="text-center pt-5 fade-item" style="animation-delay: 0.1s">REGISTER</h1>
+    <h1 class="text-center fade-item" style="animation-delay: 0.2s">Welcome to Poultry Management</h1>
+    <p class="text-center pb-5 fade-item" style="animation-delay: 0.3s">Manage your poultry farm efficiently with our comprehensive tools.</p>
     <!-- ///////form //////// -->
-    <div class="d-flex justify-content-center align-items-center vh-50">
+    <div class="d-flex justify-content-center align-items-center vh-50 fade-item" style="animation-delay: 0.4s">
       <!-- // form ///////////////// -->
-      <form #form="ngForm" (ngSubmit)="submitForm(form)" class="needs-validation w-100" style="max-width: 500px;" novalidate>
+      <form #form="ngForm" (ngSubmit)="submitForm(form)" class="needs-validation w-100 fade-item" style="max-width: 500px; animation-delay: 0.5s;" novalidate>
 
         <!-- Success message -->
-        <div *ngIf="successMessage" class="alert alert-success text-center">
+        <div *ngIf="successMessage" class="alert alert-success text-center fade-item" style="animation-delay: 0.6s">
           {{ successMessage }}
         </div>
 
         <!-- Error message -->
-        <div *ngIf="errorMessage" class="alert alert-danger text-center">
+        <div *ngIf="errorMessage" class="alert alert-danger text-center fade-item" style="animation-delay: 0.7s">
           {{ errorMessage }}
         </div>
         <div class="row">
           <!-- name -->
-          <div class="col-md-6 mb-3">
+          <div class="col-md-6 mb-3 fade-item" style="animation-delay: 0.8s">
             <label class="form-label">Name</label>
             <input
               type="text"
@@ -37,7 +37,7 @@
             </div>
           </div>
           <!-- username  -->
-          <div class="col-md-6 mb-3">
+          <div class="col-md-6 mb-3 fade-item" style="animation-delay: 0.9s">
             <label for="validationCustomUsername" class="form-label">Username</label>
             <div class="input-group has-validation">
               <span class="input-group-text">@</span>
@@ -56,7 +56,7 @@
         </div>
         <div class="row">
           <!-- email  -->
-          <div class="col-md-6 mb-3">
+          <div class="col-md-6 mb-3 fade-item" style="animation-delay: 1s">
             <label for="validationCustom02" class="form-label">Email</label>
             <input
             type="email"
@@ -72,7 +72,7 @@
             <div *ngIf="email.errors?.['patten'] || email.invalid && email.touched" class="invalid-feedback">Please enter a valid email</div>
           </div>
           <!-- password  -->
-          <div class="col-md-6 mb-3">
+          <div class="col-md-6 mb-3 fade-item" style="animation-delay: 1.1s">
             <label for="validationCustom02" class="form-label">password</label>
             <input
             type="password"
@@ -90,7 +90,7 @@
         </div>
         <div class="row">
           <!-- confirm password  -->
-          <div class="col-md-6 mb-3">
+          <div class="col-md-6 mb-3 fade-item" style="animation-delay: 1.2s">
             <label for="validationCustom02" class="form-label">confirm password</label>
             <input
             type="password"
@@ -106,7 +106,7 @@
             <div *ngIf="user.password && user.confirmPassword && user.password !== user.confirmPassword" class="text-danger">Passwords must match</div>
           </div>
           <!-- role  -->
-          <div class="col-md-6 mb-3">
+          <div class="col-md-6 mb-3 fade-item" style="animation-delay: 1.3s">
             <label for="validationCustom04" class="form-label">Role</label>
             <select
             class="form-select"
@@ -124,7 +124,7 @@
           </div>
         </div>
 
-        <button class="btn btn-primary w-100" type="submit" [disabled]="form.invalid || user.password !== user.confirmPassword">
+        <button class="btn btn-primary w-100 fade-item" type="submit" [disabled]="form.invalid || user.password !== user.confirmPassword" style="animation-delay: 1.4s">
           <!-- {{ isLoading ? 'Creating account...' : 'Create Account' }} -->
           <ng-container *ngIf="!isLoading; else loadingTpl">
             Create Account
@@ -135,8 +135,14 @@
             Processing...
           </ng-template>
         </button>
+        <div class="row">
+          <div class="mb-3">
+          <!-- navigate to login if you have an account  -->
+          <div class="text-center mt-3 fade-item" style="animation-delay: 1.5s">
+            <p>Already have an account? <a class="shadow-login" routerLink="/login">Login here</a></p>
+          </div> 
+        </div>
+      </div>
       </form>
-    </div>
-
   </div>
 </div>
